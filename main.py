@@ -1,8 +1,67 @@
+import random
+
 # Set the maximum number of lines that can be bet on
 MAX_LINES = 3
 # Defining the minimum and maximum bet amounts as constants
 MAX_BET = 100
 MIN_BET = 1
+
+# Define the number of rows and columns for the slot machine
+ROWS = 3
+COLS = 3
+
+# Define the count of each symbol for the slot machine
+symbol_count = {
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+}
+
+
+
+# The get_slot_machine_spin function generates a random spin of the slot machine
+def get_slot_machine_spin(rows,cols,symbols):
+    # Create a list of all symbols based on their count
+    all_symbols = []
+    for symbol, symbol_count in symbols.items():
+        for _ in range(symbol_count):
+            all_symbols.append(symbol)
+
+    # Create a list of columns, each containing a random selection of symbols
+    columns = []
+    for _ in range(cols):
+        column = []
+        current_symbols = all_symbols[:]
+        for _ in range(rows):
+            # Randomly select a symbol from the current symbols and add it to the column
+            value = random.choice(current_symbols)
+            current_symbols.remove(value)
+            column.append(value)
+
+        # Add the completed column to the list of columns
+        columns.append(column)
+
+    return columns
+
+
+
+# The print_slot_machine function prints out the current spin of the slot machine
+def print_slot_machine(columns):
+    # Print out each row of the slot machine
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            # Print out the symbol in the current row of the current column
+            if i != len(columns) - 1:
+                print(column[row], end=" | ")
+            else:
+                print(column[row], end="")
+
+        # Move to the next line after printing the current row
+        print()
+
+
+
 
 # The deposit function is responsible for collecting the user input which is the deposit from the user
 def deposit():
@@ -25,6 +84,8 @@ def deposit():
     
     return amount
 
+
+
 # The get_number_of_lines function is responsible for asking the user how many lines She/He wants to bet on
 def get_number_of_lines():
     # Continue prompting the user until a valid number of lines is entered
@@ -46,6 +107,8 @@ def get_number_of_lines():
     
     return lines
 
+
+
 # The get_bet function prompts the user to enter a bet amount for each line
 def get_bet():
     # Continue prompting the user until a valid bet amount is entered
@@ -66,6 +129,8 @@ def get_bet():
             print("Please enter a number")
     
     return amount
+
+
 
 # The main function is the entry point of the program
 def main():
@@ -89,6 +154,9 @@ def main():
     
     # Print the bet amount, number of lines, and total bet amount
     print(f"You are betting ${bet} on {lines} lines. Total bet is equal to: ${total_bet}")
+    
+    slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
+    print_slot_machine(slots)
 
 
 
