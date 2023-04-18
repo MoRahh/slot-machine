@@ -158,10 +158,9 @@ def get_bet():
 
 
 
-# The main function is the entry point of the program
-def main():
-    # Call the deposit function to get the user's initial balance
-    balance = deposit()
+
+    
+def spin(balance):
     # Call the get_number_of_lines function to get the number of lines the user wants to bet on
     lines = get_number_of_lines()
     # Enter a loop to get the bet amount for each line and check if the total bet amount is greater than the user's balance
@@ -186,7 +185,18 @@ def main():
     wins, win_lines = check_wins(slots, lines, bet, symbol_value)
     print(f"You won ${wins}.")
     print("You won on lines:", *win_lines)
+    return wins - total_bet
 
 
+def main():
+    balance = deposit()
+    while True:
+        print("Current balance is: %d"% balance)
+        answer = input("Press enter to play (q to quit).  ")
+        if answer == "q":
+            break
+        balance += spin(balance)
+
+    print("You left with %d" % balance)
 
 main()
