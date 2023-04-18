@@ -1,1 +1,3 @@
 # slot-machine
+This is a simple slot machine game implemented in Python. The game allows a player to deposit some money, place bets on one or more lines, and spin the reels to try and win money.
+The game will prompt the user for a deposit amount, the number of lines to bet on, and the bet amount for each line. After the user enters these values, the game will simulate a spin of the slot machine and display the results. If the player wins, the game will add the winnings to their balance and prompt them to spin again. If the player loses, the game will deduct the bet amount from their balance and prompt them to place another bet.
