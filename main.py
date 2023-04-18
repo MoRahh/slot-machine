@@ -1,12 +1,12 @@
 import random
 
-# Set the maximum number of lines that can be bet on
+# Set the maximum number of lines that can be bet on as a constant
 MAX_LINES = 3
 # Defining the minimum and maximum bet amounts as constants
 MAX_BET = 100
 MIN_BET = 1
 
-# Define the number of rows and columns for the slot machine
+# Define the number of rows and columns for the slot machine as constants
 ROWS = 3
 COLS = 3
 
@@ -18,6 +18,32 @@ symbol_count = {
     "D": 8
 }
 
+symbol_value = {
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2
+}
+
+# Define a function to check for wins based on the slot machine spin
+def check_wins(columns, lines, bet, values):
+    wins = 0
+    win_lines = []
+    # Iterate over each line that the player has bet on
+    for line in range(lines):
+        symbol = columns[0][line]
+        # Iterate over the columns in the line to check if all symbols match
+        for column in columns:
+            symbol_to_check = column[line]
+            # If the symbol does not match the first symbol in the line, break out of the loop
+            if symbol != symbol_to_check:
+                break
+        # If the loop completes without finding a non-matching symbol, calculate the win for that line
+        else:
+            wins += values[symbol] * bet
+            win_lines.append(line + 1)
+    # Return the total wins
+    return wins, win_lines
 
 
 # The get_slot_machine_spin function generates a random spin of the slot machine
@@ -97,7 +123,7 @@ def get_number_of_lines():
         if lines.isdigit():
             lines = int(lines)
             # Check if the number of lines is within the allowed range
-            if MIN_BET <= lines <= MAX_BET:
+            if 1 <= lines <= MAX_LINES:
                 # Break out of the while loop and return the valid number of lines
                 break
             else:
@@ -157,6 +183,9 @@ def main():
     
     slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
     print_slot_machine(slots)
+    wins, win_lines = check_wins(slots, lines, bet, symbol_value)
+    print(f"You won ${wins}.")
+    print("You won on lines:", *win_lines)
 
 
 
